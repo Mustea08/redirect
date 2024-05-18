@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -30,4 +30,60 @@
   <a href="scan://https://api.stage.noury.ch/api/cabinets-callbacks/qr-code?cabinet_id=if-27-4-2022-f6bb73"> go to the app 2</a>
 </body>
 
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Redirect</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function redirectToAppOrStore() {
+                var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                var appScheme = 'scan://tavnav/home/openWithDeepLink'; // Replace with your app's custom URL scheme
+                var appStoreUrl = 'https://apps.apple.com/ch/app/noury/id1577361582'; // Replace with your app's App Store URL
+                var playStoreUrl = 'https://play.google.com/store/apps/details?id=ch.noury'; // Replace with your app's Play Store URL
+                var websiteUrl = 'https://www.noury.ch/app-herunterladen'; // Replace with your website URL
+
+                function isAndroid() {
+                    return /android/i.test(userAgent);
+                }
+
+                function isiOS() {
+                    return /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+                }
+
+                function openApp() {
+                    window.location.href = appScheme;
+                    setTimeout(function() {
+                        if (isiOS()) {
+                            window.location.href = appStoreUrl;
+                        } else if (isAndroid()) {
+                            window.location.href = playStoreUrl;
+                        } else {
+                            window.location.href = websiteUrl;
+                        }
+                    }, 1000); // Timeout for fallback
+                }
+
+                // Try to open the app
+                openApp();
+            }
+
+            redirectToAppOrStore();
+        });
+    </script>
+</head>
+<body>
+    <p>If you are not redirected automatically, <a id="manual-link" href="#">click here</a>.</p>
+    <script>
+        document.getElementById('manual-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            redirectToAppOrStore();
+        });
+    </script>
+</body>
 </html>
